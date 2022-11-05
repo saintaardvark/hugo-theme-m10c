@@ -1,17 +1,15 @@
 {{ define "main" }}
 <article>
-  <ul class="posts-list">
-    {{ range where .Paginator.Pages "Type" "!=" "page" }}
-    <a class="posts-list-item-title" href="{{ .Permalink }}">{{ .Title }}</a>
-    <span class="posts-list-item-description">
-      {{ partial "icon.html" (dict "ctx" $ "name" "calendar") }}
-      {{ .PublishDate.Format "Jan 2, 2006" }}
-    </span>
-    <div class="post-content">
-      {{ .Content }}
-    </div>
-{{ end }}
-</ul>
-{{ partial "pagination.html" $ }}
+  {{ range where .Paginator.Pages "Type" "!=" "page" }}
+  <a class="posts-list-item-title" href="{{ .Permalink }}">{{ .Title }}</a>
+  <span class="posts-list-item-description">
+    {{ partial "icon.html" (dict "ctx" $ "name" "calendar") }}
+    {{ .PublishDate.Format "Jan 2, 2006" }}
+  </span>
+  <div class="post-content">
+    {{ .Content }}
+  </div>
+  {{ end }}
+  {{ partial "pagination.html" $ }}
 </article>
 {{ end }}
