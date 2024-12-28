@@ -40,7 +40,8 @@
     <main class="app-container">
       <article>
 	<!-- Only include posts in the main page -->
-	{{ range where .Paginator.Pages "Type" "==" "posts" }}
+	{{ $p := where site.Pages "Type" "==" "posts" }}
+	{{ range $p }}
 	<a class="posts-list-item-title" href="{{ .Permalink }}">{{ .Title }}</a>
 	<span class="posts-list-item-description">
 	  {{ partial "icon.html" (dict "ctx" $ "name" "calendar") }}
