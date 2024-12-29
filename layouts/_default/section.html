@@ -1,0 +1,19 @@
+{{ define "main" }}
+<main>
+  {{ .Content }}
+
+  {{ range .Pages }}
+  <a class="posts-list-item-title" href="{{ .Permalink }}">{{ .Title }}</a>
+  <span class="posts-list-item-description">
+    {{ partial "icon.html" (dict "ctx" $ "name" "calendar") }}
+    {{ .PublishDate.Format "Jan 2, 2006" }}
+  </span>
+  <div class="post-content">
+    {{ .Content }}
+  </div>
+  {{ end }}
+
+  {{ template "_internal/pagination.html" . }}
+</main>
+{{ end }}
+
