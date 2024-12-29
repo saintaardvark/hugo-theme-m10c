@@ -1,6 +1,6 @@
 {{ define "main" }}
 <article>
-  {{ range where .Paginator.Pages "Type" "!=" "page" }}
+  {{ range .Pages }}
   <a class="posts-list-item-title" href="{{ .Permalink }}">{{ .Title }}</a>
   <span class="posts-list-item-description">
     {{ partial "icon.html" (dict "ctx" $ "name" "calendar") }}
