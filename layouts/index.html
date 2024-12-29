@@ -40,16 +40,42 @@
     <main class="app-container">
       <article>
 	<!-- Only include posts in the main page -->
-	{{ $p := where site.Pages "Type" "==" "posts" }}
+	{{ $p := where site.Pages "Section" "==" "posts" }}
 	{{ range $p }}
-	<a class="posts-list-item-title" href="{{ .Permalink }}">{{ .Title }}</a>
-	<span class="posts-list-item-description">
-	  {{ partial "icon.html" (dict "ctx" $ "name" "calendar") }}
-	  {{ .PublishDate.Format "Jan 2, 2006" }}
-	</span>
-	<div class="post-content">
-	  {{ .Content }}
-	</div>
+	{{ if ne .Title "Posts" }}
+	{{/*
+	Wow, has this ever taken a lot to sort out.
+
+	What I want is:
+
+	- an index page that includes everything in "content/posts", but nothing else
+	- the "italiano" page to show just that, but not be linked to from the front page
+
+	To fix this, I added this custom template to have the index page do just that.
+
+	However, this broke once the number of italiano posts went
+	above 10 -- which is the pagerSize in config.toml.  Adding a
+	template for Hugo sections, plus changing the pagination
+	method to the "$p = ... range $p" up above, seemed to address
+	this.
+
+	But then I ended up with "Posts" in the list of titles in the
+	main index.html -- as though there was an entry somewhere that
+	was called just "Posts".  AFAICT there simply isn't one.  The
+	only way I found around this was to have this "if ne .Title" clause.
+
+	HB, Dec 28 2024
+
+	*/}}
+	  <a class="posts-list-item-title" href="{{ .Permalink }}">{{ .Title }}</a>
+	  <span class="posts-list-item-description">
+	    {{ partial "icon.html" (dict "ctx" $ "name" "calendar") }}
+	    {{ .PublishDate.Format "Jan 2, 2006" }}
+	  </span>
+	  <div class="post-content">
+	    {{ .Content }}
+	  </div>
+	  {{ end }}
 	{{ end }}
 	{{ partial "pagination.html" $ }}
       </article>
